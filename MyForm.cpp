@@ -26,8 +26,8 @@ System::Void START::MyForm::button1_Click(System::Object^ sender, System::EventA
 {
 	if (radioButton1->Checked == true)
 	{
-		std::string Ключ = Генератор_ключа();
-		textBox1->Text = gcnew String(Ключ.c_str());
+		std::string РљР»СЋС‡ = Р“РµРЅРµСЂР°С‚РѕСЂ_РєР»СЋС‡Р°();
+		textBox1->Text = gcnew String(РљР»СЋС‡.c_str());
 	}
 
 	
@@ -37,22 +37,22 @@ System::Void START::MyForm::button1_Click(System::Object^ sender, System::EventA
 System::Void START::MyForm::button2_Click(System::Object^ sender, System::EventArgs^ e)
 {
 	msclr::interop::marshal_context pre;
-	String^ Текст = richTextBox1->Text->ToString(); std::string текст = pre.marshal_as<std::string>(Текст);	std::vector <char>  текст_в_байтах(текст.begin(), текст.end());
+	String^ РўРµРєСЃС‚ = richTextBox1->Text->ToString(); std::string С‚РµРєСЃС‚ = pre.marshal_as<std::string>(РўРµРєСЃС‚);	std::vector <char>  С‚РµРєСЃС‚_РІ_Р±Р°Р№С‚Р°С…(С‚РµРєСЃС‚.begin(), С‚РµРєСЃС‚.end());
 	if (radioButton1->Checked == true)
 	{
-	String^ Ключ = textBox1->Text->ToString(); std::string ключ = pre.marshal_as<std::string>(Ключ); std::vector <bool>  ключ_в_битах = Из16в2(ключ);
+	String^ РљР»СЋС‡ = textBox1->Text->ToString(); std::string РєР»СЋС‡ = pre.marshal_as<std::string>(РљР»СЋС‡); std::vector <bool>  РєР»СЋС‡_РІ_Р±РёС‚Р°С… = РР·16РІ2(РєР»СЋС‡);
 	
-		std::vector <char> текст_в_байтах_кратный_восьмерке = Приведение_к_кратности_восьмерки(текст_в_байтах);
-		std::vector <bool> текст_в_битах = bytes2bits(текст_в_байтах_кратный_восьмерке);
-		std::vector <std::vector<bool>> текст_в_битах_по_64 = Переход_от_вектора_к_вектору_векторов(текст_в_битах);
+		std::vector <char> С‚РµРєСЃС‚_РІ_Р±Р°Р№С‚Р°С…_РєСЂР°С‚РЅС‹Р№_РІРѕСЃСЊРјРµСЂРєРµ = РџСЂРёРІРµРґРµРЅРёРµ_Рє_РєСЂР°С‚РЅРѕСЃС‚Рё_РІРѕСЃСЊРјРµСЂРєРё(С‚РµРєСЃС‚_РІ_Р±Р°Р№С‚Р°С…);
+		std::vector <bool> С‚РµРєСЃС‚_РІ_Р±РёС‚Р°С… = bytes2bits(С‚РµРєСЃС‚_РІ_Р±Р°Р№С‚Р°С…_РєСЂР°С‚РЅС‹Р№_РІРѕСЃСЊРјРµСЂРєРµ);
+		std::vector <std::vector<bool>> С‚РµРєСЃС‚_РІ_Р±РёС‚Р°С…_РїРѕ_64 = РџРµСЂРµС…РѕРґ_РѕС‚_РІРµРєС‚РѕСЂР°_Рє_РІРµРєС‚РѕСЂСѓ_РІРµРєС‚РѕСЂРѕРІ(С‚РµРєСЃС‚_РІ_Р±РёС‚Р°С…);
 
-		std::vector <bool> Зашифрованный_текст;
-		for (int i = 0; i < текст_в_битах_по_64.size(); i++)
+		std::vector <bool> Р—Р°С€РёС„СЂРѕРІР°РЅРЅС‹Р№_С‚РµРєСЃС‚;
+		for (int i = 0; i < С‚РµРєСЃС‚_РІ_Р±РёС‚Р°С…_РїРѕ_64.size(); i++)
 		{
-			append(Зашифрованный_текст, DES(текст_в_битах_по_64[i], ключ_в_битах, 1));
+			append(Р—Р°С€РёС„СЂРѕРІР°РЅРЅС‹Р№_С‚РµРєСЃС‚, DES(С‚РµРєСЃС‚_РІ_Р±РёС‚Р°С…_РїРѕ_64[i], РєР»СЋС‡_РІ_Р±РёС‚Р°С…, 1));
 		}
 
-		std::string B = Из2в16(Зашифрованный_текст);
+		std::string B = РР·2РІ16(Р—Р°С€РёС„СЂРѕРІР°РЅРЅС‹Р№_С‚РµРєСЃС‚);
 		richTextBox2->Text = gcnew String(B.c_str());
 	}
 	
@@ -63,21 +63,21 @@ System::Void START::MyForm::button2_Click(System::Object^ sender, System::EventA
 System::Void START::MyForm::button3_Click(System::Object^ sender, System::EventArgs^ e)
 {
 	msclr::interop::marshal_context pre;
-	String^ Зашифрованый_текст = richTextBox2->Text->ToString(); std::string зашифрованый_текст = pre.marshal_as<std::string>(Зашифрованый_текст);
+	String^ Р—Р°С€РёС„СЂРѕРІР°РЅС‹Р№_С‚РµРєСЃС‚ = richTextBox2->Text->ToString(); std::string Р·Р°С€РёС„СЂРѕРІР°РЅС‹Р№_С‚РµРєСЃС‚ = pre.marshal_as<std::string>(Р—Р°С€РёС„СЂРѕРІР°РЅС‹Р№_С‚РµРєСЃС‚);
 	if (radioButton1->Checked == true)
 	{
-		String^ Ключ = textBox1->Text->ToString(); std::string ключ = pre.marshal_as<std::string>(Ключ);   std::vector <bool>  ключ_в_битах = Из16в2(ключ);
-		std::vector <bool> Зашифрованный_текст_в_битах = Из16в2(зашифрованый_текст);
+		String^ РљР»СЋС‡ = textBox1->Text->ToString(); std::string РєР»СЋС‡ = pre.marshal_as<std::string>(РљР»СЋС‡);   std::vector <bool>  РєР»СЋС‡_РІ_Р±РёС‚Р°С… = РР·16РІ2(РєР»СЋС‡);
+		std::vector <bool> Р—Р°С€РёС„СЂРѕРІР°РЅРЅС‹Р№_С‚РµРєСЃС‚_РІ_Р±РёС‚Р°С… = РР·16РІ2(Р·Р°С€РёС„СЂРѕРІР°РЅС‹Р№_С‚РµРєСЃС‚);
 
-		std::vector <bool> Расашифрованный_текст;
-		std::vector <std::vector<bool>> текст_в_битах_по_64 = Переход_от_вектора_к_вектору_векторов(Зашифрованный_текст_в_битах);
+		std::vector <bool> Р Р°СЃР°С€РёС„СЂРѕРІР°РЅРЅС‹Р№_С‚РµРєСЃС‚;
+		std::vector <std::vector<bool>> С‚РµРєСЃС‚_РІ_Р±РёС‚Р°С…_РїРѕ_64 = РџРµСЂРµС…РѕРґ_РѕС‚_РІРµРєС‚РѕСЂР°_Рє_РІРµРєС‚РѕСЂСѓ_РІРµРєС‚РѕСЂРѕРІ(Р—Р°С€РёС„СЂРѕРІР°РЅРЅС‹Р№_С‚РµРєСЃС‚_РІ_Р±РёС‚Р°С…);
 
-		for (int i = 0; i < текст_в_битах_по_64.size(); i++)
+		for (int i = 0; i < С‚РµРєСЃС‚_РІ_Р±РёС‚Р°С…_РїРѕ_64.size(); i++)
 		{
-			append(Расашифрованный_текст, DES(текст_в_битах_по_64[i], ключ_в_битах, 2));
+			append(Р Р°СЃР°С€РёС„СЂРѕРІР°РЅРЅС‹Р№_С‚РµРєСЃС‚, DES(С‚РµРєСЃС‚_РІ_Р±РёС‚Р°С…_РїРѕ_64[i], РєР»СЋС‡_РІ_Р±РёС‚Р°С…, 2));
 		}
 
-		std::vector <char> A = bits2bytes(Расашифрованный_текст);
+		std::vector <char> A = bits2bytes(Р Р°СЃР°С€РёС„СЂРѕРІР°РЅРЅС‹Р№_С‚РµРєСЃС‚);
 		std::string B(A.begin(), A.end());
 		richTextBox1->Text = gcnew String(B.c_str());
 	}
@@ -100,7 +100,7 @@ System::Void START::MyForm::button4_Click(System::Object^ sender, System::EventA
 
 	std::string line;
 
-	std::ifstream in(stdF); // окрываем файл для чтения
+	std::ifstream in(stdF); // РѕРєСЂС‹РІР°РµРј С„Р°Р№Р» РґР»СЏ С‡С‚РµРЅРёСЏ
 	if (in.is_open())
 	{
 		while (std::getline(in, line))
@@ -108,7 +108,7 @@ System::Void START::MyForm::button4_Click(System::Object^ sender, System::EventA
 			std::cout << line << std::endl;
 		}
 	}
-	in.close();     // закрываем файл
+	in.close();     // Р·Р°РєСЂС‹РІР°РµРј С„Р°Р№Р»
 
 	textBox1->Text = gcnew String(line.c_str());
 
@@ -130,7 +130,7 @@ System::Void START::MyForm::button5_Click(System::Object^ sender, System::EventA
 
 	std::string line;
 
-	std::ifstream in(stdF); // окрываем файл для чтения
+	std::ifstream in(stdF); // РѕРєСЂС‹РІР°РµРј С„Р°Р№Р» РґР»СЏ С‡С‚РµРЅРёСЏ
 	if (in.is_open())
 	{
 		while (std::getline(in, line))
@@ -138,7 +138,7 @@ System::Void START::MyForm::button5_Click(System::Object^ sender, System::EventA
 			std::cout << line << std::endl;
 		}
 	}
-	in.close();     // закрываем файл
+	in.close();     // Р·Р°РєСЂС‹РІР°РµРј С„Р°Р№Р»
 
 	richTextBox1->Text = gcnew String(line.c_str());
 
@@ -158,7 +158,7 @@ System::Void START::MyForm::button6_Click(System::Object^ sender, System::EventA
 	std::string stdF = pre.marshal_as<std::string>(F);
 
 	std::string line;
-	std::ifstream in(stdF); // окрываем файл для чтения
+	std::ifstream in(stdF); // РѕРєСЂС‹РІР°РµРј С„Р°Р№Р» РґР»СЏ С‡С‚РµРЅРёСЏ
 	if (in.is_open())
 	{
 		while (std::getline(in, line))
@@ -166,7 +166,7 @@ System::Void START::MyForm::button6_Click(System::Object^ sender, System::EventA
 			std::cout << line << std::endl;
 		}
 	}
-	in.close();     // закрываем файл
+	in.close();     // Р·Р°РєСЂС‹РІР°РµРј С„Р°Р№Р»
 
 	richTextBox2->Text = gcnew String(line.c_str());
 
