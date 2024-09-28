@@ -3,13 +3,13 @@
 #include <unordered_map>
 
 
-std::vector<bool> Исключающее_ИЛИ(std::vector <bool> LR, std::vector <bool> ключ)
+std::vector<bool> XOR(std::vector <bool> LR, std::vector <bool> key)
 {
 	std::vector<bool> result;
 	result.resize(LR.size());
 	for (int i = 0; i < LR.size(); i++)
 	{
-		if (LR[i] == ключ[i])
+		if (LR[i] == key[i])
 		{
 			result[i] = false;
 		}
@@ -82,7 +82,7 @@ std::vector<bool> S4(std::vector <std::vector <bool>> S6)
 	}
 	return result;
 }
-std::vector <bool> Функция_расширения(std::vector <bool> R)
+std::vector <bool> Extension_Function(std::vector <bool> R)
 {
 	std::vector <bool> E;
 	E.resize(48);
@@ -105,10 +105,10 @@ std::vector <bool> Функция_расширения(std::vector <bool> R)
 }
 std::vector<bool> F(std::vector<bool> R, std::vector<bool> K)
 {
-	std::vector <bool> RE = Функция_расширения(R);
+	std::vector <bool> RE = Extension_Function(R);
 	std::vector <std::vector <bool>> S6; S6.resize(8); for (int i = 0; i < 8; i++) { S6[i].resize(6); }
 	std::vector <bool> s4;
-	RE = Исключающее_ИЛИ(RE, K);
+	RE = XOR(RE, K);
 
 	for (int i = 0; i < 8; i++)
 	{
@@ -120,28 +120,28 @@ std::vector<bool> F(std::vector<bool> R, std::vector<bool> K)
 	s4 = S4(S6);
 	return s4;
 }
-std::vector<std::vector <bool>> Деление(std::vector<bool> Текст)
+std::vector<std::vector <bool>> Division(std::vector<bool> text)
 {
-	int N = Текст.size();
+	int N = text.size();
 	std::vector<std::vector <bool>> LR;
 	LR.resize(2); LR[0].resize(N / 2); LR[1].resize(N / 2);
 	for (int i = 0; i < N; i++)
 	{
 		if (i < N / 2)
 		{
-			LR[0][i] = Текст[i];
+			LR[0][i] = text[i];
 		}
 		else
 		{
-			LR[1][i - N / 2] = Текст[i];
+			LR[1][i - N / 2] = text[i];
 		}
 	}
 	return LR;
 }
-std::vector<bool> Перестановка(std::vector<bool> Текст, int режим)
+std::vector<bool> transposition(std::vector<bool> text, int mode)
 {
-	std::vector<bool> Перемешаный_текст;
-	Перемешаный_текст.resize(64);
+	std::vector<bool> shuffled_text;
+	shuffled_text.resize(64);
 	std::vector<int> IP
 	{
 		58, 50, 42, 34, 26, 18, 10, 2
@@ -165,53 +165,53 @@ std::vector<bool> Перестановка(std::vector<bool> Текст, int режим)
 			, 33, 1, 41, 9, 49, 17, 57, 25
 	};
 
-	if (режим == 1)
+	if (mode == 1)
 	{
 		for (int i = 0; i < 64; i++)
 		{
-			Перемешаный_текст[IP[i] - 1] = Текст[i];
+			shuffled_text[IP[i] - 1] = text[i];
 		}
 	}
 	else
 	{
 		for (int i = 0; i < 64; i++)
 		{
-			Перемешаный_текст[IP_1[i] - 1] = Текст[i];
+			shuffled_text[IP_1[i] - 1] = text[i];
 		}
 	}
-	return Перемешаный_текст;
+	return shuffled_text;
 }
-std::vector<bool> DES(std::vector<bool> текст_в_битах, std::vector<bool> ключ_в_битах, int trigger)
+std::vector<bool> DES(std::vector<bool> text_in_bytes, std::vector<bool> key_in_bits, int trigger)
 {
-	std::vector<bool> текст_в_битах_перемешанный = Перестановка(текст_в_битах, 1);
-	std::vector<std::vector<bool>> LR = Деление(текст_в_битах_перемешанный);
-	std::vector<std::vector<bool>> раундовые_крючи = Раундовые_крючи(ключ_в_битах);
+	std::vector<bool> jumbled_text_in_bytes = transposition(text_in_bits, 1);
+	std::vector<std::vector<bool>> LR = Division(shuffled_text_in_bits);
+	std::vector<std::vector<bool>> round_keys = Round_keys(key_in_bitss);
 
 
 	std::vector<bool> f;
-	std::vector<bool> сумма;
+	std::vector<bool> summ;
 	if (trigger == 1)
 	{
 		for (int i = 0; i < 16; i++)
 		{
-			f = F(LR[1], раундовые_крючи[i]);
-			сумма = Исключающее_ИЛИ(LR[0], f);
+			f = F(LR[1], round_keys[i]);
+			summ = XOR(LR[0], f);
 			LR[0] = LR[1];
-			LR[1] = сумма;
+			LR[1] = summ;
 		}
 	}
 	else
 	{
 		for (int i = 0; i < 16; i++)
 		{
-			f = F(LR[0], раундовые_крючи[15 - i]);
-			сумма = Исключающее_ИЛИ(LR[1], f);
+			f = F(LR[0], round_keys[15 - i]);
+			summ = XOR(LR[1], f);
 			LR[1] = LR[0];
-			LR[0] = сумма;
+			LR[0] = summ;
 		}
 	}
 
-	std::vector<bool> Зашифрованный_перемешанный_текст_в_битах = Слияние(LR);
-	std::vector<bool> Зашифрованный_текст_в_битах = Перестановка(Зашифрованный_перемешанный_текст_в_битах, 2);
-	return Зашифрованный_текст_в_битах;
+	std::vector<bool> Encrypted_shuffled_text_in_bits = Merger(LR);
+	std::vector<bool> Encrypted_text_in_bits = transposition(Encrypted_shuffled_text_in_bits, 2);
+	return Encrypted_text_in_bits;
 }
